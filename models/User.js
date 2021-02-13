@@ -14,20 +14,20 @@ const UserSchema = new Schema({
      unique: true,
      match: [/.+@.+\..+/]
  },
- thoughts: [
-     {
-         type: Schema.Types.ObjectId,
-         ref: 'Thought'
-     }
- ],
- friends: [
-    {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
-]
+//  thoughts: [thoughtSchema],
+//  friends: [this],
+// },
+// {
+ toJSON: {
+   virtuals: true,
+ },
+ id: false,
+}
+);
 
-});
+UserSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+  });
 
 const User = model('User', UserSchema);
 module.exports = User;
