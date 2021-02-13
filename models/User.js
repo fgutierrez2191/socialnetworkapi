@@ -14,10 +14,10 @@ const UserSchema = new Schema({
      unique: true,
      match: [/.+@.+\..+/]
  },
-//  thoughts: [thoughtSchema],
-//  friends: [this],
-// },
-// {
+ thoughts: [],
+ friends: [],
+},
+{
  toJSON: {
    virtuals: true,
  },
