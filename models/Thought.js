@@ -34,7 +34,7 @@ const ThoughtSchema = new Schema (
     {
         thoughtText: {
             type: String,
-            required: true,
+            required: 'thoughtText is required',
             min: 1,
             max: 280
         },
@@ -45,10 +45,10 @@ const ThoughtSchema = new Schema (
         },
         username: {
             type: String,
-            required: true
+            required: 'Please provide your username'
         },
         //use reactionSchema to validate data for a reply 
-        reactions: [ReactionSchema]
+        // reactions: [ReactionSchema]
     },
     {
         toJSON: {
@@ -59,9 +59,9 @@ const ThoughtSchema = new Schema (
     }
 );
 
-ThoughtSchema.virtual('reactionCount').get(function() {
-    return this.reactions.length
-});
+// ThoughtSchema.virtual('reactionCount').get(function() {
+//     return this.reactions.length
+// });
 
 const Thought = model('Thought', ThoughtSchema);
 
