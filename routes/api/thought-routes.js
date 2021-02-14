@@ -15,6 +15,6 @@ router.route("/:id").get(getThoughtById).delete(deleteThoughtById);
 
 // api/thoughts/:userId/:thoughtId
 
-// router.route("/:userId/:thoughtId").put(updateThoughtById);
+router.route("/:userId/:thoughtId").put(updateThoughtById);
 
 module.exports = router;

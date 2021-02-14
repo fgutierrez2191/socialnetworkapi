@@ -37,6 +37,26 @@ getAllThoughts(req, res) {
       });
   },
 
+    // update thought by id
+    updateThoughtById({ params, body }, res) {
+        Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
+          new: true,
+          runValidators: true,
+        })
+          .then(({ _id }) => {
+            return User.findOneAndUpdate(
+              { _id: params.userId },
+              { $push: { thoughts: _id } },
+              { new: true }
+            );
+          })
+          .then((dbThoughtData) => res.json(dbThoughtData))
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
+
   //delete thought by 
   deleteThoughtById({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
