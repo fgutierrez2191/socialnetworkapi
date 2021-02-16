@@ -11,6 +11,47 @@ const userController = {
         });
     },
 
+    //create friendship
+    addNewFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $push: { friends: params.friendId } },
+            {new: true, runValidators: true }
+        )
+        .populate({
+            path: "thoughts",
+            select: "-__v",
+          })
+          .select("-__v")
+          .then((dbUserData) => {
+            if (!dbUserData) {
+              res.status(404).json({ message: "No user found with specified ID!" });
+              return;
+            }
+            res.json(dbUserData);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
+    
+
+      deleteFriendById({ params }, res) {
+        User.findOneAndUpdate(
+          { _id: params.userId },
+          { $pull: { friends: params.friendId } },
+          { new: true }
+        )
+          .then((dbUserData) => {
+            res.json(dbUserData);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
+
       // get one user by id
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
